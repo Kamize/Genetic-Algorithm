@@ -1,6 +1,8 @@
 from math import sin, cos
 import random
 
+MUTATION_RATE = 0.1
+
 def main():
     x = 10
     y = 5
@@ -49,8 +51,19 @@ def crossover(parent1, parent2, crossover_rate) :
 
 
 # Mutation
-def mutation(genome, mutation rate) : # Talitha
-    pass
+def mutation(Solution) :
+    '''
+        returns a mutated genome randomly based on mutation rate.
+    '''
+    m = list(Solution.genome)
+    if random.uniform(0,1) <= MUTATION_RATE :
+        for digit in range(len(m)) : 
+            if m[digit] == '0' :
+                m[digit] = '1'
+            else :
+                m[digit] = '0'
+    Solution.genome = "".join(m)
+
 # New Generation
 
 # Generate next generation
