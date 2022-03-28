@@ -1,43 +1,63 @@
 from math import sin, cos
 import random
 
-# heuristic equation
-def h(x,y) :
-    hasil = (pow((cos(x) + sin(y)),2)) / pow(x,2)+pow(y,2)
-    return hasil
-#Creating a population
-def generate_genome(genome_size):
-    pass
-
-def generate_population(population, genome_size) :
-    return  [[random.choice([0,1]) for _ in range(genome_size)] for _ in range(population_size)]
-
-#Decode Cromosome
-def decode(genome) : # Cepet2an
-    pass
-    #domain function
-    # d_function = lambda rmax,rmin, start_bit, end_bit :
-
-#Fitness Function
-def fitness(genome) : # Talitha
-    pass
-
-#Parent Picking
-def elitism(population, k) :
-    pass
-
-#Crossover
-def crossover(parent1, parent2, crossover_rate) :
-    pass
-
-#Mutation
-def mutation(genome, mutation rate) : # Talitha
-    pass
-#New Generation
-
 def main():
     x = 10
     y = 5
     print(h(x,y))
 
-main()
+class Solution:
+    def __init__(self, genome=None):
+        '''
+            Initialization. Generate random genome if not given.
+        '''
+        self.genome_length = 32
+        if genome is None:
+            genome = "".join([random.choice(("0", "1")) for _ in range(self.genome_length)])
+        self.genome = genome
+
+    def decode(self):
+        '''
+            returns a tuple of x and y value calculated from genome.
+        '''
+        def bin_range(binary):
+            return int(binary, 2)/int("1"*len(binary), 2)
+        x_range = (-5, 5)
+        y_range = (-5, 5)
+        x = x_range[0]+(x_range[1]-x_range[0])*bin_range(self.genome[:self.genome_length//2])
+        y = y_range[0]+(y_range[1]-y_range[0])*bin_range(self.genome[self.genome_length//2:])
+        return x, y
+
+    def fitness(self):
+        '''
+            returns a fitness value based on its genome.
+        '''
+        x, y = self.decode()
+        return ((cos(x)+sin(y))**2)/(x**2+y**2)
+
+
+def population(population_size) :
+    return  [Solution() for _ in range(population_size)]
+
+# Parent Picking
+def crossover_parent(population):
+    pass
+
+# Crossover
+def crossover(parent1, parent2, crossover_rate) :
+    pass
+
+
+# Mutation
+def mutation(genome, mutation rate) : # Talitha
+    pass
+# New Generation
+
+# Generate next generation
+def generate_next_generation():
+    pass
+
+
+
+if __name__ == "__main":
+    main()
