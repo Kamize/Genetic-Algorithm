@@ -6,7 +6,6 @@ MUTATION_RATE = 0.1
 def main():
     x = 10
     y = 5
-    print(h(x,y))
 
 class Solution:
     def __init__(self, genome=None):
@@ -43,11 +42,17 @@ def population(population_size) :
 
 # Parent Picking
 def crossover_parent(population):
-    parent1, parent2 = random.choice(populaiton, size=2, replace=False)
+    parent1, parent2 = random.choice(population, size=2, replace=False)
     return parent1, parent2
 
 # Crossover
-def crossover(parent1, parent2) :
+def crossover(organism, parent1, parent2) :
+    div = random.randint(len(parent1.genome))
+    genome1 = parent1.genome[:div]+parent2.genome[div:]
+    genome2 = parent2.genome[:div]+parent1.genome[div:]
+    child1 = organism(genome1)
+    child2 = organism(genome2)
+    return child1, child2
 
 # Mutation
 def mutation(Solution) :
@@ -63,7 +68,6 @@ def mutation(Solution) :
                 m[digit] = '0'
     Solution.genome = "".join(m)
 
-# New Generation
 
 # Generate next generation
 def generate_next_generation():
