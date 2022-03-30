@@ -2,6 +2,7 @@ from math import sin, cos
 from numpy import random
 
 MUTATION_RATE = 0.1
+ELITISM = 2
 
 def main():
     x = 10
@@ -38,10 +39,12 @@ class Solution:
 
 
 def populate(population, Organism, population_size) :
-    return  [Organism() for _ in range(population_size)]
+    population = [Organism() for _ in range(population_size)]
+    population.sort(key=Organism.fitness)
+    
 
 # Parent Picking
-def crossover_parent(population):
+def crossover_parents(population):
     parent1, parent2 = random.choice(population, size=2, replace=False)
     return parent1, parent2
 
@@ -71,7 +74,20 @@ def mutation(Solution) :
 
 # Generate next generation
 def generate_next_generation(population):
+    Organism = type(population[0])
+    population_size = len(population)
     next_generation = []
+    # elitism
+    next_generation.extend(population[:ELITISM])
+    
+    while len(next_generation) < population_size:
+        parent1, parent2 = crossover_parents(population)
+        child1, child2 = crossover(Organism, parent1, parent2)
+        next_generation.extend((child1,child2))
+
+    next_generation.sort(key=Organism.fitness, reverse=True)
+
+    population[:] = next_generation
 
 
 
