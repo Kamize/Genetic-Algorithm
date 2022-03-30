@@ -39,8 +39,8 @@ class Solution:
 
 
 def populate(population, Organism, population_size) :
-    population = [Organism() for _ in range(population_size)]
-    population.sort(key=Organism.fitness)
+    population.extend([Organism() for _ in range(population_size)])
+    population.sort(key=Organism.fitness, reverse=True)
     
 
 # Parent Picking
@@ -58,18 +58,17 @@ def crossover(Organism, parent1, parent2) :
     return child1, child2
 
 # Mutation
-def mutation(Solution) :
+def mutated(genome) :
     '''
         returns a mutated genome randomly based on mutation rate.
     '''
-    m = list(Solution.genome)
-    if random.uniform(0,1) <= MUTATION_RATE :
-        for digit in range(len(m)) : 
-            if m[digit] == '0' :
-                m[digit] = '1'
-            else :
-                m[digit] = '0'
-    Solution.genome = "".join(m)
+    genome = list(genome)
+    for idx, nucleotide in enumerate(genome):
+        if random.uniform()<=MUTATION_RATE:
+            if nucleotide=="0":
+                genome[idx] = "1"
+            else:
+                genome[idx] = "0"
 
 
 # Generate next generation
