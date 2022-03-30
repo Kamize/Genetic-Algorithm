@@ -1,5 +1,4 @@
-from math import sin, cos
-from numpy import random
+from numpy import sin, cos, random
 
 MUTATION_RATE = 0.1
 ELITISM = 2
