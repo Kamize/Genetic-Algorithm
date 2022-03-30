@@ -1,12 +1,11 @@
 from math import sin, cos
-import random
+from numpy import random
 
 MUTATION_RATE = 0.1
+ELITISM = 2
 
 def main():
-    x = 10
-    y = 5
-    print(h(x,y))
+    pass
 
 class Solution:
     def __init__(self, genome=None):
@@ -38,37 +37,60 @@ class Solution:
         return ((cos(x)+sin(y))**2)/(x**2+y**2)
 
 
-def population(population_size) :
-    return  [Solution() for _ in range(population_size)]
+def populate(population, Organism, population_size) :
+    population.extend([Organism() for _ in range(population_size)])
+    population.sort(key=Organism.fitness, reverse=True)
+    
 
 # Parent Picking
-def crossover_parent(population):
-    pass
+def crossover_parents(population):
+    parent1, parent2 = random.choice(population, size=2, replace=False)
+    return parent1, parent2
 
 # Crossover
-def crossover(parent1, parent2, crossover_rate) :
-    pass
-
+def crossover(Organism, parent1, parent2) :
+    div = random.randint(len(parent1.genome))
+    genome1 = parent1.genome[:div]+parent2.genome[div:]
+    genome2 = parent2.genome[:div]+parent1.genome[div:]
+    child1 = Organism(genome1)
+    child2 = Organism(genome2)
+    return child1, child2
 
 # Mutation
-def mutation(Solution) :
+def mutated(genome) :
     '''
         returns a mutated genome randomly based on mutation rate.
     '''
-    m = list(Solution.genome)
-    if random.uniform(0,1) <= MUTATION_RATE :
-        for digit in range(len(m)) : 
-            if m[digit] == '0' :
-                m[digit] = '1'
-            else :
-                m[digit] = '0'
-    Solution.genome = "".join(m)
+    genome = list(genome)
+    for idx, nucleotide in enumerate(genome):
+        if random.uniform()<=MUTATION_RATE:
+            if nucleotide=="0":
+                genome[idx] = "1"
+            else:
+                genome[idx] = "0"
+    genome = "".join(genome)
+    return genome
 
-# New Generation
+def mutate_population(population):
+    for entity in population:
+        entity.genome = mutated(entity.genome)
 
 # Generate next generation
-def generate_next_generation():
-    pass
+def generate_next_generation(population):
+    Organism = type(population[0])
+    population_size = len(population)
+    next_generation = []
+    # elitism
+    next_generation.extend(population[:ELITISM])
+    
+    while len(next_generation) < population_size:
+        parent1, parent2 = crossover_parents(population)
+        child1, child2 = crossover(Organism, parent1, parent2)
+        next_generation.extend((child1,child2))
+
+    next_generation.sort(key=Organism.fitness, reverse=True)
+
+    population[:] = next_generation
 
 
 
