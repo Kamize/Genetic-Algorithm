@@ -5,6 +5,7 @@ MUTATION_RATE = 0.1
 ELITISM = 2
 POPULATION_SIZE = 100
 GENERATION_LIMIT = 1000
+SHOW_NUM = 10
 
 def main():
     population = []
@@ -12,7 +13,7 @@ def main():
     show_top(0, population[0])
     for generation in range(1, GENERATION_LIMIT+1):
         generate_next_generation(population)
-        if generation%(GENERATION_LIMIT//100) == 0:
+        if generation%(GENERATION_LIMIT//SHOW_NUM) == 0:
             show_top(generation, population[0])
 
 class Solution:
