@@ -37,8 +37,8 @@ class Solution:
         return ((cos(x)+sin(y))**2)/(x**2+y**2)
 
 
-def population(population_size) :
-    return  [Solution() for _ in range(population_size)]
+def populate(population, Organism, population_size) :
+    return  [Organism() for _ in range(population_size)]
 
 # Parent Picking
 def crossover_parent(population):
@@ -46,12 +46,12 @@ def crossover_parent(population):
     return parent1, parent2
 
 # Crossover
-def crossover(organism, parent1, parent2) :
+def crossover(Organism, parent1, parent2) :
     div = random.randint(len(parent1.genome))
     genome1 = parent1.genome[:div]+parent2.genome[div:]
     genome2 = parent2.genome[:div]+parent1.genome[div:]
-    child1 = organism(genome1)
-    child2 = organism(genome2)
+    child1 = Organism(genome1)
+    child2 = Organism(genome2)
     return child1, child2
 
 # Mutation
@@ -70,8 +70,8 @@ def mutation(Solution) :
 
 
 # Generate next generation
-def generate_next_generation():
-    pass
+def generate_next_generation(population):
+    next_generation = []
 
 
 
