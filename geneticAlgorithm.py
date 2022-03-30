@@ -88,6 +88,7 @@ def generate_next_generation(population):
         child1, child2 = crossover(Organism, parent1, parent2)
         next_generation.extend((child1,child2))
 
+    mutate_population(next_generation)
     next_generation.sort(key=Organism.fitness, reverse=True)
 
     population[:] = next_generation
