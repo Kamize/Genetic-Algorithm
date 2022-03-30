@@ -3,9 +3,17 @@ from numpy import random
 
 MUTATION_RATE = 0.1
 ELITISM = 2
+POPULATION_SIZE = 100
+GENERATION_LIMIT = 1000
 
 def main():
-    pass
+    population = []
+    populate(population, Solution, POPULATION_SIZE)
+    show_top(0, population[0])
+    for generation in range(1, GENERATION_LIMIT+1):
+        generate_next_generation(population)
+        if generation%(GENERATION_LIMIT//100) == 0:
+            show_top(generation, population[0])
 
 class Solution:
     def __init__(self, genome=None):
@@ -48,10 +56,14 @@ def crossover_parents(population):
     return parent1, parent2
 
 # Crossover
-def crossover(Organism, parent1, parent2) :
-    div = random.randint(len(parent1.genome))
-    genome1 = parent1.genome[:div]+parent2.genome[div:]
-    genome2 = parent2.genome[:div]+parent1.genome[div:]
+def crossover(genome1, genome2):
+    div = random.randint(len(genome1))
+    genome1 = genome1[:div]+genome2[div:]
+    genome2 = genome2[:div]+genome1[div:]
+    return genome1, genome2
+
+def crossover_children(Organism, parent1, parent2) :
+    genome1, genome2 = crossover(parent1.genome, parent2.genome)
     child1 = Organism(genome1)
     child2 = Organism(genome2)
     return child1, child2
@@ -72,7 +84,7 @@ def mutated(genome) :
     return genome
 
 def mutate_population(population):
-    for entity in population:
+    for entity in population[ELITISM:]:
         entity.genome = mutated(entity.genome)
 
 # Generate next generation
@@ -85,7 +97,7 @@ def generate_next_generation(population):
     
     while len(next_generation) < population_size:
         parent1, parent2 = crossover_parents(population)
-        child1, child2 = crossover(Organism, parent1, parent2)
+        child1, child2 = crossover_children(Organism, parent1, parent2)
         next_generation.extend((child1,child2))
 
     mutate_population(next_generation)
@@ -93,7 +105,11 @@ def generate_next_generation(population):
 
     population[:] = next_generation
 
+def show_top(generation, entity):
+    print(f"top solution of generation {generation}:")
+    print(f"{'genome':<30}= {entity.genome}")
+    print(f"{'(x,y)':<30}= {entity.decode()}")
+    print(f"{'h(x,y)':<30}= {entity.fitness()}")
+    print()
 
-
-if __name__ == "__main":
-    main()
+main()
