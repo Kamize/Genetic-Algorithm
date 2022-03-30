@@ -5,8 +5,7 @@ MUTATION_RATE = 0.1
 ELITISM = 2
 
 def main():
-    x = 10
-    y = 5
+    pass
 
 class Solution:
     def __init__(self, genome=None):
@@ -69,7 +68,12 @@ def mutated(genome) :
                 genome[idx] = "1"
             else:
                 genome[idx] = "0"
+    genome = "".join(genome)
+    return genome
 
+def mutate_population(population):
+    for entity in population:
+        entity.genome = mutated(entity.genome)
 
 # Generate next generation
 def generate_next_generation(population):
