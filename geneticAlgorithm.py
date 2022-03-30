@@ -26,7 +26,7 @@ class Solution:
         '''
             Initialization. Generate random genome if not given.
         '''
-        self.genome_length = 32
+        self.genome_length = 32     # The higher the value, the more accurate the solution can be.
         if genome is None:
             genome = "".join([random.choice(("0", "1")) for _ in range(self.genome_length)])
         self.genome = genome
