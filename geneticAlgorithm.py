@@ -1,5 +1,5 @@
 from math import sin, cos
-import random
+from numpy import random
 
 MUTATION_RATE = 0.1
 
@@ -43,12 +43,11 @@ def population(population_size) :
 
 # Parent Picking
 def crossover_parent(population):
-    pass
+    parent1, parent2 = random.choice(populaiton, size=2, replace=False)
+    return parent1, parent2
 
 # Crossover
-def crossover(parent1, parent2, crossover_rate) :
-    pass
-
+def crossover(parent1, parent2) :
 
 # Mutation
 def mutation(Solution) :
