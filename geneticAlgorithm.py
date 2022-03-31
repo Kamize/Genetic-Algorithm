@@ -44,8 +44,9 @@ class Solution:
         y_range = (-5, 5)
 
         # Calculates x and y by adding their minimum value with the difference of their maximum and minimum value multiplied by the real number representation of each half of genome.
-        x = x_range[0]+(x_range[1]-x_range[0])*bin_range(self.genome[:self.genome_length//2])
-        y = y_range[0]+(y_range[1]-y_range[0])*bin_range(self.genome[self.genome_length//2:])
+        div = self.genome_length//2
+        x = x_range[0]+(x_range[1]-x_range[0])*bin_range(self.genome[:div])
+        y = y_range[0]+(y_range[1]-y_range[0])*bin_range(self.genome[div:])
 
         return x, y
 
