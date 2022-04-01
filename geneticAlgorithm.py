@@ -1,10 +1,10 @@
-from numpy import sin, cos, random
+from numpy import sin, cos, log, random
 
-MUTATION_RATE = 0.1
+MUTATION_RATE = 0.07
 ELITISM = 2
-POPULATION_SIZE = 10
-GENERATION_LIMIT = 700
-SHOW_NUM = 20
+POPULATION_SIZE = 20
+GENERATION_LIMIT = 2000
+SHOW_NUM = 5
 
 def main():
     # Generate population
@@ -56,7 +56,11 @@ class Solution:
             Returns a fitness value based on its genome.
         '''
         x, y = self.decode()
-        return ((cos(x)+sin(y))**2)/(x**2+y**2)
+
+        try:
+            return (((cos(x)+sin(y))**2)/(x**2+y**2))**(-1)
+        except ZeroDivisionError:
+            return 0
 
 
 def populate(population, Organism, num) :
@@ -168,7 +172,7 @@ def show_top(population, generation):
     print(f"top solution of generation {generation}:")
     print(f"{'genome':<30}= {top.genome}")
     print(f"{'(x,y)':<30}= {top.decode()}")
-    print(f"{'h(x,y)':<30}= {top.fitness()}")
+    print(f"{'h(x,y)':<30}= {top.fitness()**(-1)}")
     print()
 
 if __name__ == "__main__":
