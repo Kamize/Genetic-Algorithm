@@ -1,4 +1,4 @@
-from numpy import sin, cos, log, random
+from numpy import sin, cos, random
 
 MUTATION_RATE = 0.07
 ELITISM = 2
