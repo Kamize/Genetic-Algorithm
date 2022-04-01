@@ -94,8 +94,7 @@ def crossover(genome1, genome2):
     div = random.randint(len(genome1))
 
     # Crossing
-    genome1 = genome1[:div]+genome2[div:]
-    genome2 = genome2[:div]+genome1[div:]
+    genome1, genome2 = genome1[:div]+genome2[div:], genome2[:div]+genome1[div:]
     return genome1, genome2
 
 def crossover_children(Organism, parent1, parent2) :
