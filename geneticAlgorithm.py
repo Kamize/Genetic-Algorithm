@@ -23,11 +23,12 @@ def main():
 class Solution:
     def __init__(self, genome=None):
         '''
-            Initialization. Generate random genome if not given.
+            Initialization. Generate random genome of specified default length if not given.
         '''
-        self.genome_length = 32     # The higher the value, the more accurate the solution can be.
+        default_length = 32     # The higher the value, the more accurate the solution can be.
+
         if genome is None:
-            genome = "".join([random.choice(("0", "1")) for _ in range(self.genome_length)])
+            genome = "".join([random.choice(("0", "1")) for _ in range(default_length)])
         self.genome = genome
 
     def decode(self):
@@ -44,7 +45,7 @@ class Solution:
         y_range = (-5, 5)
 
         # Calculates x and y by adding their minimum value with the difference of their maximum and minimum value multiplied by the real number representation of each half of genome.
-        div = self.genome_length//2
+        div = len(self.genome)//2
         x = x_range[0]+(x_range[1]-x_range[0])*bin_range(self.genome[:div])
         y = y_range[0]+(y_range[1]-y_range[0])*bin_range(self.genome[div:])
 
